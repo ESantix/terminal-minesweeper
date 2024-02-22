@@ -23,23 +23,15 @@ void main() {
 
   int MAX_SIZE = 40;
 
-
-      int MIN_SIZE              = 5;
+  int MIN_SIZE = 5;
 
   // Print initial menu
   printf("\n\033[34mTERMINAL MINESWEEPER by esantix\n\033[0m");
 
-  printf("\n Choose map size [%d-%d]: ",MIN_SIZE,MAX_SIZE);
+  printf("\n Choose map size [%d-%d]: ", MIN_SIZE, MAX_SIZE);
   scanf("%d", &dimension);
-  while 
-  
-  
-  
-  
-  (dimension < 5 
-  
-  || dimension > 40) {
-    printf("Choose between [%d-%d]: ", MIN_SIZE,MAX_SIZE);
+  while(dimension < MIN_SIZE || dimension > MAX_SIZE) {
+    printf("Choose between [%d-%d]: ", MIN_SIZE, MAX_SIZE);
     scanf("%d", &dimension);
   };
 
