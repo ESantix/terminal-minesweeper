@@ -15,15 +15,17 @@ void main() {
   int level;
   int cells;
   int perdiste = 0;
+  int ganaste = 0;
 
   char MINESYMBOL = '*';
-  char EMPTYSYMBOL = ' ';
+  char EMPTYSYMBOL = '_';
   char NOTVISIBLESYMBOL = ' ';
 
   // Print initial menu
-  printf("\n TERMINAL MINESWIPPER by esantix\n\n");
 
-  printf("\n Size [5-40]: ");
+  printf("\n\033[34mTERMINAL MINESWIPPER by esantix\n\033[0m");
+
+  printf("\n Choose map size [5-40]: ");
   scanf("%d", &dimension);
   while (dimension < 5 || dimension > 40) {
     printf("Choose between [5-40]: ");
@@ -39,7 +41,7 @@ void main() {
 
   // Level to number of mines calculation
   cells = dimension * dimension;
-  num_mines = (int)(dimension * dimension * level * 0.1);
+  num_mines = (int)(dimension * dimension * level * 0.05);
   num_free = cells - num_mines;
 
   // Map values
@@ -89,11 +91,13 @@ void main() {
   while (print_map == 1) {
     // Print coordinates input menu
     system("clear");
-    printf("Mines: %d\nCells to free %d/%d \n\n", num_mines,
+    printf("\n\033[34mTERMINAL MINESWIPPER by esantix\n\033[0m");
+
+    printf("Mines: %d\nCells to free: %d/%d \n\n", num_mines,
            num_free - num_visibles, num_free);
     k = (dimension - (dimension % 10)) / 10;
 
-    printf("   ");
+    printf("    ");
     for (i = 1; i <= dimension; i++) {
       if (i % 10 == 0) {
         printf("  ");
@@ -103,15 +107,12 @@ void main() {
     };
     printf("\n");
 
-    // Ppor cada linea
+
     for (i = 1; i <= dimension; i++) {
-      // Imprimir indice fila
       if (i < 10) {
         printf(" ");
       };
-      printf(
-
-          "%d ", i);
+      printf("%d> ", i);
 
       // Imprimir valores de fila
       for (j = 1; j <= dimension; j++) {
@@ -119,35 +120,47 @@ void main() {
           if (MAP[i][j] == MINEVAL) {
             printf(" %c", MINESYMBOL);
           } else if (MAP[i][j] == 0) {
-            printf(" %c", EMPTYSYMBOL);
+            printf("  ");
           } else {
             printf(
-                "\033[%dm"
-                " %d"
+                
+                "|\033[%dm%d"
                 "\033[0m",
                 30 + MAP[i][j], MAP[i][j]);
           };
         } else {
-          printf(
-              "\033[1;1;%dm"
-              " %c"
-              "\033[0m",
-              45 + j % 2, NOTVISIBLESYMBOL);
+          // Not pressed
+          printf("|_");
         };
       };
-      printf(" %d", i);
-      printf("\n");
+      printf("|\n");
     };
 
+    // printf("   ");
+    // for (i = 1; i <= dimension; i++) {
+    //   if (i % 10 == 0) {
+    //     printf("  ");
+    //   } else {
+
+    //     printf(" %d", i % 10);
+    //   };
+    // };
+   
+
     if (perdiste == 1) {
-      printf("\n  YOU LOOSE :(\n\n");
+      printf("\033[31m\n\n  YOU LOOSE :(\n\n\033[0m");
       exit(1);
     };
 
-    // Menu de elegir coordenadas
-    printf("\n\nRow ");
+    if (ganaste == 1) {
+      printf("\033[32m\n\n  YOU WIN  :) \n\n\033[0m");
+      exit(0);
+    };
+
+    // Coordinates choosing menu
+    printf("\n\nRow: ");
     scanf("%d", &fi);
-    printf("Column ");
+    printf("Column: ");
     scanf("%d", &co);
 
     // Hacer visible la elegida
@@ -156,7 +169,6 @@ void main() {
     // Si es bomba, perder
     if (MAP[fi][co] == MINEVAL) {
       perdiste = 1;
-
       for (i = 0; i <= dimension; i++) {
         for (j = 0; j <= dimension; j++) {
           VISIBLE[i][j] = 1;
@@ -198,9 +210,7 @@ void main() {
       };
     };
     if (num_visibles == num_free) {
-      system("clear");
-      printf("\n\n\n\t\tYOU WIN\n\n\n");
-      print_map = 0;
+      ganaste = 1;
     };
   };
 }
