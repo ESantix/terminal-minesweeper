@@ -17,7 +17,7 @@ void main() {
   int perdiste = 0;
   int ganaste = 0;
 
-                char MINESYMBOL = '*';
+  char MINESYMBOL = '*';
   char EMPTYSYMBOL = '_';
   char NOTVISIBLESYMBOL = ' ';
 
@@ -106,7 +106,6 @@ void main() {
     };
     printf("\n");
 
-
     for (i = 1; i <= dimension; i++) {
       if (i < 10) {
         printf(" ");
@@ -122,7 +121,7 @@ void main() {
             printf("  ");
           } else {
             printf(
-                
+
                 "|\033[%dm%d"
                 "\033[0m",
                 30 + MAP[i][j], MAP[i][j]);
@@ -144,7 +143,6 @@ void main() {
     //     printf(" %d", i % 10);
     //   };
     // };
-   
 
     if (perdiste == 1) {
       printf("\033[31m\n\n  YOU LOOSE :(\n\n\033[0m");
@@ -160,19 +158,18 @@ void main() {
     printf("\n\nRow: ");
     scanf("%d", &fi);
 
-while (fi < 1 || fi > dimension) {
-    printf("Choose between [1-%d]: ", dimension);
-    scanf("%d", &fi);
-  };
-
+    while (fi < 1 || fi > dimension) {
+      printf("Choose between [1-%d]: ", dimension);
+      scanf("%d", &fi);
+    };
 
     printf("Column: ");
     scanf("%d", &co);
 
-while (co < 1 || co > dimension) {
-    printf("Choose between [1-%d]: ", dimension);
-    scanf("%d", &co);
-  };
+    while (co < 1 || co > dimension) {
+      printf("Choose between [1-%d]: ", dimension);
+      scanf("%d", &co);
+    };
 
     // Hacer visible la elegida
     VISIBLE[fi][co] = 1;
@@ -192,18 +189,15 @@ while (co < 1 || co > dimension) {
       for (i = 1; i <= dimension; i++) {
         for (j = 1; j <= dimension; j++) {
           // Si celda vecina es vacia y visible, hacer visible
-          if (
-              (
-              (VISIBLE[i - 1][j - 1] == 1 && MAP[i - 1][j - 1] == 0) ||
-              (VISIBLE[i - 1][j] == 1 && MAP[i - 1][j] == 0) ||
-              (VISIBLE[i - 1][j + 1] == 1 && MAP[i - 1][j + 1] == 0) ||
-              (VISIBLE[i][j - 1] == 1 && MAP[i][j - 1] == 0) ||
-              (VISIBLE[i][j + 1] == 1 && MAP[i][j + 1] == 0) ||
-              (VISIBLE[i + 1][j - 1] == 1 && MAP[i + 1][j - 1] == 0) ||
-              (VISIBLE[i + 1][j] == 1 && MAP[i + 1][j] == 0) ||
-              (VISIBLE[i + 1][j + 1] == 1 && MAP[i + 1][j + 1] == 0) 
-              ) && (MAP[i][j] != MINEVAL)
-           ) {
+          if (((VISIBLE[i - 1][j - 1] == 1 && MAP[i - 1][j - 1] == 0) ||
+               (VISIBLE[i - 1][j] == 1 && MAP[i - 1][j] == 0) ||
+               (VISIBLE[i - 1][j + 1] == 1 && MAP[i - 1][j + 1] == 0) ||
+               (VISIBLE[i][j - 1] == 1 && MAP[i][j - 1] == 0) ||
+               (VISIBLE[i][j + 1] == 1 && MAP[i][j + 1] == 0) ||
+               (VISIBLE[i + 1][j - 1] == 1 && MAP[i + 1][j - 1] == 0) ||
+               (VISIBLE[i + 1][j] == 1 && MAP[i + 1][j] == 0) ||
+               (VISIBLE[i + 1][j + 1] == 1 && MAP[i + 1][j + 1] == 0)) &&
+              (MAP[i][j] != MINEVAL)) {
             VISIBLE[i][j] = 1;
           };
         };
