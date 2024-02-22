@@ -17,12 +17,11 @@ void main() {
   int perdiste = 0;
   int ganaste = 0;
 
-  char MINESYMBOL = '*';
+                char MINESYMBOL = '*';
   char EMPTYSYMBOL = '_';
   char NOTVISIBLESYMBOL = ' ';
 
   // Print initial menu
-
   printf("\n\033[34mTERMINAL MINESWEEPER by esantix\n\033[0m");
 
   printf("\n Choose map size [5-40]: ");
