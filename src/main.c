@@ -169,14 +169,18 @@ void main() {
       for (i = 1; i <= dimension; i++) {
         for (j = 1; j <= dimension; j++) {
           // Si celda vecina es vacia y visible, hacer visible
-          if ((VISIBLE[i - 1][j - 1] == 1 && MAP[i - 1][j - 1] == 0) ||
+          if (
+              (
+              (VISIBLE[i - 1][j - 1] == 1 && MAP[i - 1][j - 1] == 0) ||
               (VISIBLE[i - 1][j] == 1 && MAP[i - 1][j] == 0) ||
               (VISIBLE[i - 1][j + 1] == 1 && MAP[i - 1][j + 1] == 0) ||
               (VISIBLE[i][j - 1] == 1 && MAP[i][j - 1] == 0) ||
               (VISIBLE[i][j + 1] == 1 && MAP[i][j + 1] == 0) ||
               (VISIBLE[i + 1][j - 1] == 1 && MAP[i + 1][j - 1] == 0) ||
               (VISIBLE[i + 1][j] == 1 && MAP[i + 1][j] == 0) ||
-              (VISIBLE[i + 1][j + 1] == 1 && MAP[i + 1][j + 1] == 0)) {
+              (VISIBLE[i + 1][j + 1] == 1 && MAP[i + 1][j + 1] == 0) 
+              ) && (MAP[i][j] != MINEVAL)
+           ) {
             VISIBLE[i][j] = 1;
           };
         };
