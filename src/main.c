@@ -161,7 +161,7 @@ void main() {
     printf("\n\nRow: ");
     scanf("%d", &fi);
 
-while (fi < 0 || fi > dimension) {
+while (fi < 1 || fi > dimension) {
     printf("Choose between [1-%d]: ", dimension);
     scanf("%d", &fi);
   };
@@ -170,7 +170,7 @@ while (fi < 0 || fi > dimension) {
     printf("Column: ");
     scanf("%d", &co);
 
-while (co < 0 || co > dimension) {
+while (co < 1 || co > dimension) {
     printf("Choose between [1-%d]: ", dimension);
     scanf("%d", &co);
   };
