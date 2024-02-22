@@ -2,9 +2,9 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #define BOMB 9
 
-#define PRINTFC(c, t, f, s) printf("\033[%d;%dm" f "\033[0m", t, 28 + c, s)
 #define PUTSC(c, f) printf("\033[%dm" f "\033[0m", 30 + c)
 
 #define C_RED 1
@@ -16,132 +16,131 @@
 
 void main() {
   int i, j, k;
-  int dim, nbombas, nvisibles = 0, nlibres;
-  int seguir = 1, fi, co;
-  int dificultad;
-  int celdas;
+  int dimension, nbombas, num_visibles = 0, num_free;
+  int print_map = 1, fi, co;
+  int level;
+  int cells;
   int perdiste = 0;
 
-  printf("\n Size (square): ");
-  scanf("%d", &dim);
-  printf(" Level [1-5]: ");
-  scanf("%d", &dificultad);
-
-  while (dificultad < 0 || dificultad > 5) {
-    printf("Choose between [1-5]: ");
-    scanf("%d", &dificultad);
+  printf("\n TERMINAL MINESWIPPER by esantix\n\n");
+  printf("\n Size [5-40]: ");
+  scanf("%d", &dimension);
+  while (dimension < 5 || dimension > 40) {
+    printf("Choose between [5-40]: ");
+    scanf("%d", &dimension);
   };
-  // dim=20;
-  // nbombas=100;
-  celdas = dim * dim;
-  nbombas = (int)(dim * dim * dificultad * 0.1);
+  printf(" Level [1-5]: ");
+  scanf("%d", &level);
 
-  int A[dim + 1][dim + 1];
-  int VISIBLE[dim + 1][dim + 1];
+  while (level < 0 || level > 5) {
+    printf("Choose between [1-5]: ");
+    scanf("%d", &level);
+  };
+
+  cells = dimension * dimension;
+  nbombas = (int)(dimension * dimension * level * 0.1);
+
+  int MAP[dimension + 1][dimension + 1];
+  int VISIBLE[dimension + 1][dimension + 1];
   int a = 0;
 
-  nlibres = dim * dim - nbombas;  // Cantidad de celdas que no son bombas
+  num_free =
+      dimension * dimension - nbombas;  // Cantidad de cells que no son bombas
 
-  for (i = 0; i <= dim; i++) {
-    for (j = 0; j <= dim; j++) {
+  for (i = 0; i <= dimension; i++) {
+    for (j = 0; j <= dimension; j++) {
       VISIBLE[i][j] = 0;
-      A[i][j] = 0;
+      MAP[i][j] = 0;
     };
   };
 
   // Ubicar las bombas en posiciones aleatorias
   for (i = 1; i <= nbombas; i++) {
-    j = 1 + rand() % dim;
-    k = 1 + rand() % dim;
-    if (A[j][k] == BOMB)  // If there already is a bomb there, decrease count
+    j = 1 + rand() % dimension;
+    k = 1 + rand() % dimension;
+    if (MAP[j][k] ==
+        MINE_VAL)  // If there already is a bomb there, decrease count
     {
       i--;
     };
-    A[j][k] = BOMB;  // Bombs are "9"
+    MAP[j][k] = BOMB;  // Bombs are "9"
   };
 
   // The cell value is the amount of bombs around it
   // Set non-bomb cell values
   a = 0;
-  for (i = 1; i <= dim; i++) {
-    for (j = 1; j <= dim; j++) {
+  for (i = 1; i <= dimension; i++) {
+    for (j = 1; j <= dimension; j++) {
       VISIBLE[i][j] = 0;
-      if (A[i][j] != BOMB) {
+      if (MAP[i][j] != BOMB) {
         a = 0;
-        a = a + (int)(A[i - 1][j - 1] == BOMB);  // up-left
-        a = a + (int)(A[i - 1][j] == BOMB);      // up
-        a = a + (int)(A[i - 1][j + 1] == BOMB);  // up-right
-        a = a + (int)(A[i][j - 1] == BOMB);      // left
-        a = a + (int)(A[i][j + 1] == BOMB);      // right
-        a = a + (int)(A[i + 1][j - 1] == BOMB);  // down-left
-        a = a + (int)(A[i + 1][j] == BOMB);      // down
-        a = a + (int)(A[i + 1][j + 1] == BOMB);  // down-right
+        a = a + (int)(MAP[i - 1][j - 1] == BOMB);  // up-left
+        a = a + (int)(MAP[i - 1][j] == BOMB);      // up
+        a = a + (int)(MAP[i - 1][j + 1] == BOMB);  // up-right
+        a = a + (int)(MAP[i][j - 1] == BOMB);      // left
+        a = a + (int)(MAP[i][j + 1] == BOMB);      // right
+        a = a + (int)(MAP[i + 1][j - 1] == BOMB);  // down-left
+        a = a + (int)(MAP[i + 1][j] == BOMB);      // down
+        a = a + (int)(MAP[i + 1][j + 1] == BOMB);  // down-right
 
-        A[i][j] = (int)a;
+        MAP[i][j] = (int)a;
       };
     };
   };
   // Empieza interaccion jugador
-  while (seguir == 1) {
+  while (print_map == 1) {
     // Actualizar pantalla
     system("clear");
-    printf("Mines: %d.  Cells to free %d / %d \n\n\n\t", nbombas,
-           nlibres - nvisibles, nlibres);
-    k = (dim - (dim % 10)) / 10;
+    printf("Mines: %d\nCells to free %d/%d \n\n", nbombas,
+           num_free - num_visibles, num_free);
+    k = (dimension - (dimension % 10)) / 10;
 
     // Imprimir indicador decenas
+    printf("   ");
     for (i = 1; i <= k; i++) {
-      printf(
-          "\033[33m"
-          "                   %d"
-          "\033[0m",
-          i);
+      printf("                   %d", i);
     };
-    printf("\n\t");
+    printf("\n   ");
 
     // Imprimir unidades (10 --> 1)
-    for (i = 1; i <= dim; i++) {
+    for (i = 1; i <= dimension; i++) {
       printf(
-          "\033[33m"
-          " %d"
-          "\033[0m",
-          i % 10);
+
+          " %d", i % 10);
     };
     printf("\n");
 
     // Ppor cada linea
-    for (i = 1; i <= dim; i++) {
+    for (i = 1; i <= dimension; i++) {
       // Imprimir indice fila
+      if (i < 10) {
+        printf(" ");
+      };
       printf(
-          "\033[33m"
-          "%d\t"
-          "\033[0m",
-          i);
+
+          "%d ", i);
 
       // Imprimir valores de fila
-      for (j = 1; j <= dim; j++) {
-        // Todas las celdas estan separadas
+      for (j = 1; j <= dimension; j++) {
+        // Todas las cells estan separadas
         // printf(" ");
 
         if (VISIBLE[i][j] == 1) {
           // Si es bombba
-          if (A[i][j] == 9) {
+          if (MAP[i][j] == 9) {
             PUTSC(C_RED, " *");
           }
           // Si es vacio
-          else if (A[i][j] == 0) {
-            printf(
-                "\033[1;0;100m"
-                "  "
-                "\033[0m");
+          else if (MAP[i][j] == 0) {
+            printf("  ");
           }
           // Si es numero
           else {
             printf(
-                "\033[1;%d;47m"
+                "\033[%dm"
                 " %d"
                 "\033[0m",
-                30 + A[i][j], A[i][j]);
+                30 + MAP[i][j], MAP[i][j]);
           };
         }
 
@@ -155,6 +154,7 @@ void main() {
               45 + j % 2);
         };
       };
+      printf(" %d", i);
       printf("\n");
     };
 
@@ -173,31 +173,29 @@ void main() {
     VISIBLE[fi][co] = 1;
 
     // Si es bomba, perder
-    if (A[fi][co] == BOMB) {
+    if (MAP[fi][co] == BOMB) {
       perdiste = 1;
 
-      for (i = 0; i <= dim; i++) {
-        for (j = 0; j <= dim; j++) {
+      for (i = 0; i <= dimension; i++) {
+        for (j = 0; j <= dimension; j++) {
           VISIBLE[i][j] = 1;
         };
       };
     };
 
     // Hacer visibles vecinas
-    for (k = 0; k <= nlibres; k++) {
-      for (i = 1; i <= dim; i++) {
-        for (j = 1; j <= dim; j++) {
+    for (k = 0; k <= num_free; k++) {
+      for (i = 1; i <= dimension; i++) {
+        for (j = 1; j <= dimension; j++) {
           // Si celda vecina es vacia y visible, hacer visible
-          if (
-                    (VISIBLE[i - 1][j - 1] == 1 && A[i - 1][j - 1] == 0)||
-                    (VISIBLE[i - 1][j] == 1 && A[i - 1][j] == 0)||
-                    (VISIBLE[i - 1][j + 1] == 1 && A[i - 1][j + 1] == 0)||
-                    (VISIBLE[i][j - 1] == 1 && A[i][j - 1] == 0)||
-                    (VISIBLE[i][j + 1] == 1 && A[i][j + 1] == 0)||
-                    (VISIBLE[i + 1][j - 1] == 1 && A[i + 1][j - 1] == 0)||
-                    (VISIBLE[i + 1][j] == 1 && A[i + 1][j] == 0)||
-                    (VISIBLE[i + 1][j + 1] == 1 && A[i + 1][j + 1] == 0)
-              ) {
+          if ((VISIBLE[i - 1][j - 1] == 1 && MAP[i - 1][j - 1] == 0) ||
+              (VISIBLE[i - 1][j] == 1 && MAP[i - 1][j] == 0) ||
+              (VISIBLE[i - 1][j + 1] == 1 && MAP[i - 1][j + 1] == 0) ||
+              (VISIBLE[i][j - 1] == 1 && MAP[i][j - 1] == 0) ||
+              (VISIBLE[i][j + 1] == 1 && MAP[i][j + 1] == 0) ||
+              (VISIBLE[i + 1][j - 1] == 1 && MAP[i + 1][j - 1] == 0) ||
+              (VISIBLE[i + 1][j] == 1 && MAP[i + 1][j] == 0) ||
+              (VISIBLE[i + 1][j + 1] == 1 && MAP[i + 1][j + 1] == 0)) {
             VISIBLE[i][j] = 1;
           };
         };
@@ -205,19 +203,19 @@ void main() {
     };
 
     // CAlcular cantidad de visibles
-    nvisibles = 0;
+    num_visibles = 0;
 
-    for (i = 1; i <= dim; i++) {
-      for (j = 1; j <= dim; j++) {
+    for (i = 1; i <= dimension; i++) {
+      for (j = 1; j <= dimension; j++) {
         if (VISIBLE[i][j] == 1) {
-          nvisibles++;
+          num_visibles++;
         };
       };
     };
-    if (nvisibles == nlibres) {
+    if (num_visibles == num_free) {
       system("clear");
       printf("\n\n\n\t\tYOU WIN\n\n\n");
-      seguir = 0;
+      print_map = 0;
     };
   };
 }
