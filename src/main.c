@@ -160,8 +160,20 @@ void main() {
     // Coordinates choosing menu
     printf("\n\nRow: ");
     scanf("%d", &fi);
+
+while (fi < 0 || fi > dimension) {
+    printf("Choose between [1-%d]: ", dimension);
+    scanf("%d", &fi);
+  };
+
+
     printf("Column: ");
     scanf("%d", &co);
+
+while (co < 0 || co > dimension) {
+    printf("Choose between [1-%d]: ", dimension);
+    scanf("%d", &co);
+  };
 
     // Hacer visible la elegida
     VISIBLE[fi][co] = 1;
