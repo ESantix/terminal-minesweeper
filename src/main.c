@@ -23,7 +23,7 @@ void main() {
 
   // Print initial menu
 
-  printf("\n\033[34mTERMINAL MINESWIPPER by esantix\n\033[0m");
+  printf("\n\033[34mTERMINAL MINESWEEPER by esantix\n\033[0m");
 
   printf("\n Choose map size [5-40]: ");
   scanf("%d", &dimension);
@@ -91,7 +91,7 @@ void main() {
   while (print_map == 1) {
     // Print coordinates input menu
     system("clear");
-    printf("\n\033[34mTERMINAL MINESWIPPER by esantix\n\033[0m");
+    printf("\n\033[34mTERMINAL MINESWEEPER by esantix\n\033[0m");
 
     printf("Mines: %d\nCells to free: %d/%d \n\n", num_mines,
            num_free - num_visibles, num_free);
