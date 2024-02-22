@@ -11,7 +11,7 @@ void main() {
   // Declare variable
   int i, j, k;
   int dimension, num_mines, num_visibles = 0, num_free = 0;
-  int print_map = 1, fi, co;
+  int print_map = 1, row, col;
   int level;
   int cells;
   int perdiste = 0;
@@ -21,13 +21,25 @@ void main() {
   char EMPTYSYMBOL = '_';
   char NOTVISIBLESYMBOL = ' ';
 
+  int MAX_SIZE = 40;
+
+
+      int MIN_SIZE              = 5;
+
   // Print initial menu
   printf("\n\033[34mTERMINAL MINESWEEPER by esantix\n\033[0m");
 
-  printf("\n Choose map size [5-40]: ");
+  printf("\n Choose map size [%d-%d]: ",MIN_SIZE,MAX_SIZE);
   scanf("%d", &dimension);
-  while (dimension < 5 || dimension > 40) {
-    printf("Choose between [5-40]: ");
+  while 
+  
+  
+  
+  
+  (dimension < 5 
+  
+  || dimension > 40) {
+    printf("Choose between [%d-%d]: ", MIN_SIZE,MAX_SIZE);
     scanf("%d", &dimension);
   };
 
@@ -156,26 +168,26 @@ void main() {
 
     // Coordinates choosing menu
     printf("\n\nRow: ");
-    scanf("%d", &fi);
+    scanf("%d", &row);
 
-    while (fi < 1 || fi > dimension) {
+    while (row < 1 || row > dimension) {
       printf("Choose between [1-%d]: ", dimension);
-      scanf("%d", &fi);
+      scanf("%d", &row);
     };
 
     printf("Column: ");
-    scanf("%d", &co);
+    scanf("%d", &col);
 
-    while (co < 1 || co > dimension) {
+    while (col < 1 || col > dimension) {
       printf("Choose between [1-%d]: ", dimension);
-      scanf("%d", &co);
+      scanf("%d", &col);
     };
 
     // Hacer visible la elegida
-    VISIBLE[fi][co] = 1;
+    VISIBLE[row][col] = 1;
 
     // Si es bomba, perder
-    if (MAP[fi][co] == MINEVAL) {
+    if (MAP[row][col] == MINEVAL) {
       perdiste = 1;
       for (i = 0; i <= dimension; i++) {
         for (j = 0; j <= dimension; j++) {
