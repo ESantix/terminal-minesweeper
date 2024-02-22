@@ -23,14 +23,14 @@ void main() {
   // Print initial menu
   printf("\n TERMINAL MINESWIPPER by esantix\n\n");
 
-  printf("\n Size [5-40](15): ");
+  printf("\n Size [5-40]: ");
   scanf("%d", &dimension);
   while (dimension < 5 || dimension > 40) {
     printf("Choose between [5-40]: ");
     scanf("%d", &dimension);
   };
 
-  printf(" Level [1-5](1): ");
+  printf(" Level [1-5]: ");
   scanf("%d", &level);
   while (level < 0 || level > 5) {
     printf("Choose between [1-5]: ");
