@@ -34,7 +34,7 @@ void main() {
 
   printf(" Level [1-5]: ");
   scanf("%d", &level);
-  while (level < 0 || level > 5) {
+  while (level < 1 || level > 5) {
     printf("Choose between [1-5]: ");
     scanf("%d", &level);
   };
