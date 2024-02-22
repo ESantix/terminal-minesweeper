@@ -188,10 +188,16 @@ void main() {
       for (i = 1; i <= dim; i++) {
         for (j = 1; j <= dim; j++) {
           // Si celda vecina es vacia y visible, hacer visible
-          if ((VISIBLE[i - 1][j] == 1 && A[i - 1][j] == 0) ||
-              (VISIBLE[i][j - 1] == 1 && A[i][j - 1] == 0) ||
-              (VISIBLE[i][j + 1] == 1 && A[i][j + 1] == 0) ||
-              (VISIBLE[i + 1][j] == 1 && A[i + 1][j] == 0)) {
+          if (
+                    (VISIBLE[i - 1][j - 1] == 1 && A[i - 1][j - 1] == 0)||
+                    (VISIBLE[i - 1][j] == 1 && A[i - 1][j] == 0)||
+                    (VISIBLE[i - 1][j + 1] == 1 && A[i - 1][j + 1] == 0)||
+                    (VISIBLE[i][j - 1] == 1 && A[i][j - 1] == 0)||
+                    (VISIBLE[i][j + 1] == 1 && A[i][j + 1] == 0)||
+                    (VISIBLE[i + 1][j - 1] == 1 && A[i + 1][j - 1] == 0)||
+                    (VISIBLE[i + 1][j] == 1 && A[i + 1][j] == 0)||
+                    (VISIBLE[i + 1][j + 1] == 1 && A[i + 1][j + 1] == 0)
+              ) {
             VISIBLE[i][j] = 1;
           };
         };
